@@ -59,4 +59,4 @@ def extract_digits_and_predict(filepath, model, filename):
     return digits_paths, predictions_list, roi_path
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=8080, debug=True)
