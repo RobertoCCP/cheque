@@ -5,7 +5,7 @@ import numpy as np
 from tensorflow.keras.models import load_model
 
 app = Flask(__name__)
-model = load_model('modelo_mnist.h5')  # Asegúrate de que el modelo esté cargado correctamente
+model = load_model('mnist_cnn_model1.h5')  # Asegúrate de que el modelo esté cargado correctamente
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -17,8 +17,9 @@ def home():
         filepath = os.path.join('static', filename)
         f.save(filepath)
         digits, predictions, roi_path = extract_digits_and_predict(filepath, model, filename)
-        results = list(zip(digits, predictions))  # Prepara los datos para el template
-        return render_template('index.html', uploaded_image=filename, results=results, roi_image=roi_path)
+        results = list(zip(digits, predictions))
+        final_number = ''.join(str(pred) for _, pred in results)  # Concatena las predicciones en un solo número
+        return render_template('index.html', uploaded_image=filename, results=results, roi_image=roi_path, final_number=final_number)
     return render_template('index.html')
 
 def extract_digits_and_predict(filepath, model, filename):
@@ -30,7 +31,7 @@ def extract_digits_and_predict(filepath, model, filename):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     inverted_gray = cv2.bitwise_not(gray)
 
-    x_start, y_start, x_end, y_end = int(image.shape[1] * 0.76), int(image.shape[0] * 0.185), int(image.shape[1] * 0.955), int(image.shape[0] * 0.32)
+    x_start, y_start, x_end, y_end = int(image.shape[1] * 0.76), int(image.shape[0] * 0.185), int(image.shape[1] * 0.955), int(image.shape[0] * 0.30)
     roi = inverted_gray[y_start:y_end, x_start:x_end]
     roi_path = f'roi_{filename}'
     cv2.imwrite(os.path.join('static', roi_path), roi)

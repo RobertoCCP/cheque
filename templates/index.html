@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,57 +9,89 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(to right, #6a11cb, #759cde); /* Fondo degradado */
-            color: white; /* Texto en blanco para mayor contraste */
+            background: linear-gradient(to right, #6a11cb, #759cde);
+            /* Fondo degradado */
+            color: white;
+            /* Texto en blanco para mayor contraste */
         }
+
         .container {
             margin-top: 20px;
-            background: rgba(147, 146, 146, 0.8); /* Fondo semitransparente para los contenidos */
-            border-radius: 15px; /* Bordes redondeados para el contenedor */
-            padding: 20px; /* Espaciado interno */
+            background: rgba(147, 146, 146, 0.8);
+            /* Fondo semitransparente para los contenidos */
+            border-radius: 15px;
+            /* Bordes redondeados para el contenedor */
+            padding: 20px;
+            /* Espaciado interno */
         }
+
         .img-preview {
-            max-width: 100%; /* Ajusta el tamaño de la imagen */
+            max-width: 100%;
+            /* Ajusta el tamaño de la imagen */
             height: auto;
         }
+
         .digit-image {
-            width: 100px; /* Tamaño de las imágenes de los dígitos */
+            width: 100px;
+            /* Tamaño de las imágenes de los dígitos */
         }
+
         .result-section {
             display: flex;
             flex-wrap: wrap;
-            justify-content: start; /* Alinear los elementos de predicción de izquierda a derecha */
-            gap: 10px; /* Espacio entre elementos de predicción */
+            justify-content: start;
+            /* Alinear los elementos de predicción de izquierda a derecha */
+            gap: 10px;
+            /* Espacio entre elementos de predicción */
         }
+
         .result-item {
-            text-align: center; /* Centrado de texto y imágenes en la sección de predicciones */
-            border: 1px solid #ddd; /* Borde sutil para cada elemento de resultado */
+            text-align: center;
+            /* Centrado de texto y imágenes en la sección de predicciones */
+            border: 1px solid #ddd;
+            /* Borde sutil para cada elemento de resultado */
             padding: 10px;
-            border-radius: 5px; /* Bordes redondeados para los elementos de resultado */
+            border-radius: 5px;
+            /* Bordes redondeados para los elementos de resultado */
         }
-        .form-upload, .row {
-            border: 2px solid #ccc; /* Borde para las secciones de formulario y resultado */
-            border-radius: 10px; /* Bordes redondeados */
-            margin-bottom: 20px; /* Margen inferior */
-            padding: 10px; /* Espaciado interno */
+
+        .form-upload,
+        .row {
+            border: 2px solid #ccc;
+            /* Borde para las secciones de formulario y resultado */
+            border-radius: 10px;
+            /* Bordes redondeados */
+            margin-bottom: 20px;
+            /* Margen inferior */
+            padding: 10px;
+            /* Espaciado interno */
         }
-        h1, h3 {
+
+        h1,
+        h3 {
             text-align: center;
         }
+
         h1 {
-            color: red; /* Título en rojo */
-            font-weight: bold; /* Negrita para el título */
+            color: red;
+            /* Título en rojo */
+            font-weight: bold;
+            /* Negrita para el título */
         }
+
         strong {
-            font-weight: bold; /* Negrita para 'Integrantes' */
+            font-weight: bold;
+            /* Negrita para 'Integrantes' */
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Universidad Tecnica del Norte (UTN)</h1>
         <p class="text-center">Proyecto de Reconocimiento de Dígitos en Cheques</p>
-        <p class="text-center"><strong>Integrantes:</strong> Cusacota Roberto, Pule Víctor, Ipiales Carlos, Persona4, Persona5</p>
+        <p class="text-center"><strong>Integrantes:</strong> Cusacota Roberto, Pule Víctor, Ipiales Carlos, Persona4,
+            Persona5</p>
 
         <div class="row form-upload">
             <div class="col-md-6 offset-md-3">
@@ -77,7 +110,8 @@
                 {% if uploaded_image %}
                 <div class="mb-3">
                     <h3>Imagen Cargada</h3>
-                    <img src="{{ url_for('static', filename=uploaded_image) }}" alt="Imagen Cargada" class="img-fluid img-preview">
+                    <img src="{{ url_for('static', filename=uploaded_image) }}" alt="Imagen Cargada"
+                        class="img-fluid img-preview">
                 </div>
                 {% endif %}
             </div>
@@ -85,7 +119,8 @@
                 {% if uploaded_image %}
                 <div class="mb-3">
                     <h3>Región de Interés</h3>
-                    <img src="{{ url_for('static', filename=roi_image) }}" alt="Región de Interés" class="img-fluid img-preview">
+                    <img src="{{ url_for('static', filename=roi_image) }}" alt="Región de Interés"
+                        class="img-fluid img-preview">
                 </div>
                 {% endif %}
             </div>
@@ -96,12 +131,22 @@
                 <h2>Predicciones</h2>
                 <div class="result-section">
                     {% for result in results %}
-                        <div class="result-item">
-                            <img src="{{ url_for('static', filename=result[0]) }}" alt="Dígito Extraído" class="img-fluid digit-image">
-                            <p>Número Predicho: {{ result[1] }}</p>
-                        </div>
+                    <div class="result-item">
+                        <img src="{{ url_for('static', filename=result[0]) }}" alt="Dígito Extraído"
+                            class="img-fluid digit-image">
+                        <p>Número Predicho: {{ result[1] }}</p>
+                    </div>
                     {% endfor %}
                 </div>
+            </div>
+        </div>
+        {% endif %}
+        {% if final_number %}
+        <div class="row">
+            <div class="col-12">
+                <h2>Número Final Completo</h2>
+                <p class="result-final-number" style="font-size: 24px; font-weight: bold; color: yellow;">{{
+                    final_number }}</p>
             </div>
         </div>
         {% endif %}
@@ -112,4 +157,5 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
