@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\rober\OneDrive\Documentos\Semestre 7\BigData\cheque\env
+set VIRTUAL_ENV=C:\Archivos de la UTN\Semestre 7\3. BigData\cheque\env
 
 if not defined PROMPT set PROMPT=$P$G
 
